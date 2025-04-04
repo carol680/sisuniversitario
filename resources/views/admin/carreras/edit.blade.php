@@ -16,7 +16,7 @@
             <div class="card-body">
                 <form action="{{ url('/admin/carreras/' . $carrera->id) }}" method="post">
                     @csrf
-                    @method('PUT') <!-- Asegura que se envíe como actualización -->
+                    @method('PUT') 
 
                     <div class="row">
                         <div class="col-md-12">

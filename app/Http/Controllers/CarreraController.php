@@ -30,16 +30,16 @@ class CarreraController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nombre' => 'required|string|max:255'
+            'nombre' => 'required|string|max:255',
         ]);
-    
-        Carrera::create([
-            'nombre' => $request->nombre
-        ]);
-    
-        return redirect('/admin/carreras')->with('success', 'Carrera registrada correctamente');
+
+        Carrera::create($request->all()); 
+
+        return redirect()->route('admin.carreras.index')
+            ->with('mensaje', 'Carrera creada correctamente')
+            ->with('icono', 'success');
     }
-    
+
     /**
      * Display the specified resource.
      */
@@ -53,7 +53,7 @@ class CarreraController extends Controller
      */
     public function edit($id)
     {
-        $carrera = Carrera::find($id);
+        $carrera = Carrera::findOrFail($id); // Encuentra la carrera por ID
         return view('admin.carreras.edit', compact('carrera'));
     }
 
@@ -63,32 +63,27 @@ class CarreraController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'nombre' => 'required|string|max:255'
+            'nombre' => 'required|string|max:255',
         ]);
-    
-        $carrera = Carrera::findOrFail($id);
-        $carrera->update([
-            'nombre' => $request->nombre
-        ]);
-    
-        return redirect('/admin/carreras')->with('success', 'Carrera actualizada correctamente');
+
+        $carrera = Carrera::findOrFail($id); // Encuentra la carrera por ID
+        $carrera->update($request->all()); // Actualiza los datos de la carrera
+
+        return redirect()->route('admin.carreras.index')
+            ->with('mensaje', 'Carrera actualizada correctamente')
+            ->with('icono', 'success');
     }
-    
 
     /**
      * Remove the specified resource from storage.
      */
     public function destroy($id)
     {
-        $carrera = Carrera::find($id);
-    
-        if (!$carrera) {
-            return redirect()->back()->with('error', 'Carrera no encontrada.');
-        }
-    
+        $carrera = Carrera::findOrFail($id); // Encuentra la carrera por ID
         $carrera->delete(); // Elimina la carrera
-    
-        return redirect()->route('admin.carreras.index')->with('success', 'Carrera eliminada correctamente.');
+
+        return redirect()->route('admin.carreras.index')
+            ->with('mensaje', 'Carrera eliminada correctamente')
+            ->with('icono', 'success');
     }
-    
 }

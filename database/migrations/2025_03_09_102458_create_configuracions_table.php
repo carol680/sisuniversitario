@@ -11,15 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('configuracions', function (Blueprint $table) {
+        Schema::create('configuraciones', function (Blueprint $table) {
             $table->id();
             $table->string('nombre');
             $table->string('descripcion');
             $table->text('direccion');
-            $table->string('telefono');
-            $table->string('email');
+            $table->string('telefono', 20);  // Especifica el tamaño si es necesario
+            $table->string('email', 255);    // Tamaño recomendado para emails
             $table->string('web')->nullable();
-            $table->text('logo');
+            $table->string('logo');         // Si estás guardando solo la ruta o el nombre del archivo
             $table->timestamps();
         });
     }
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('configuracions');
+        Schema::dropIfExists('configuraciones');
     }
 };

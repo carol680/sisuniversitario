@@ -30,16 +30,16 @@ class NivelController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nombre' => 'required|string|max:255'
+            'nombre'      => 'required|string|max:255',
         ]);
-    
-        Nivel::create([
-            'nombre' => $request->nombre
-        ]);
-    
-        return redirect('/admin/niveles')->with('success', 'Nivel registrado correctamente');
+
+        Nivel::create($request->all());
+
+        return redirect()->route('admin.niveles.index')
+            ->with('mensaje', 'Nivel creado correctamente')
+            ->with('icono', 'success');
     }
-    
+
     /**
      * Display the specified resource.
      */
@@ -53,7 +53,7 @@ class NivelController extends Controller
      */
     public function edit($id)
     {
-        $nivel = Nivel::find($id);
+        $nivel = Nivel::findOrFail($id);
         return view('admin.niveles.edit', compact('nivel'));
     }
 
@@ -63,32 +63,27 @@ class NivelController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'nombre' => 'required|string|max:255'
+            'nombre'      => 'required|string|max:255',
         ]);
-    
+
         $nivel = Nivel::findOrFail($id);
-        $nivel->update([
-            'nombre' => $request->nombre
-        ]);
-    
-        return redirect('/admin/niveles')->with('success', 'Nivel actualizado correctamente');
+        $nivel->update($request->all());
+
+        return redirect()->route('admin.niveles.index')
+            ->with('mensaje', 'Nivel actualizado correctamente')
+            ->with('icono', 'success');
     }
-    
 
     /**
      * Remove the specified resource from storage.
      */
     public function destroy($id)
     {
-        $nivel = Nivel::find($id);
-    
-        if (!$nivel) {
-            return redirect()->back()->with('error', 'Nivel no encontrado.');
-        }
-    
-        $nivel->delete(); // Elimina el nivel
-    
-        return redirect()->route('admin.niveles.index')->with('success', 'Nivel eliminado correctamente.');
+        $nivel = Nivel::findOrFail($id);
+        $nivel->delete();
+
+        return redirect()->route('admin.niveles.index')
+            ->with('mensaje', 'Nivel eliminado correctamente')
+            ->with('icono', 'success');
     }
-    
 }

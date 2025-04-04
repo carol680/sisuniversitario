@@ -25,21 +25,21 @@ class GestionController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * crear
      */
     public function store(Request $request)
     {
         $request->validate([
-            'nombre' => 'required|string|max:255'
+            'nombre' => 'required|string|max:255',
         ]);
-    
-        Gestion::create([
-            'nombre' => $request->nombre
-        ]);
-    
-        return redirect('/admin/gestiones')->with('success', 'Gestión registrada correctamente');
+
+        Gestion::create($request->all());
+
+        return redirect()->route('admin.gestiones.index')
+        ->with('mensaje', 'Gestión creada correctamente')
+        ->with('icono', 'success');
     }
-    
+
     /**
      * Display the specified resource.
      */
@@ -58,37 +58,32 @@ class GestionController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * modificarn o editar
      */
     public function update(Request $request, $id)
     {
         $request->validate([
-            'nombre' => 'required|string|max:255'
+            'nombre' => 'required|string|max:255',
         ]);
-    
-        $gestion = Gestion::findOrFail($id);
-        $gestion->update([
-            'nombre' => $request->nombre
-        ]);
-    
-        return redirect('/admin/gestiones')->with('success', 'Gestión actualizada correctamente');
+
+        $gestion = Gestion::find($id);
+        $gestion->update($request->all());
+
+        return redirect()->route('admin.gestiones.index')
+            ->with('mensaje', 'Gestión actualizada correctamente')
+            ->with('icono', 'success');
     }
-    
 
     /**
-     * Remove the specified resource from storage.
+     * Eliminar
      */
     public function destroy($id)
     {
         $gestion = Gestion::find($id);
-    
-        if (!$gestion) {
-            return redirect()->back()->with('error', 'Gestión no encontrada.');
-        }
-    
-        $gestion->delete(); // Elimina la gestión
-    
-        return redirect()->route('admin.gestiones.index')->with('success', 'Gestión eliminada correctamente.');
+        $gestion->delete();
+
+        return redirect()->route('admin.gestiones.index')
+            ->with('mensaje', 'Gestión eliminada correctamente')
+            ->with('icono', 'success');
     }
-    
 }

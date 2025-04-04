@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Configuracion;
 use Illuminate\Http\Request;
+use Symfony\Contracts\Service\Attribute\Required;
 
 class ConfiguracionController extends Controller
 {
@@ -12,10 +13,8 @@ class ConfiguracionController extends Controller
      */
     public function index()
     {
-
-        $configuracion =Configuracion::first();
+        $configuracion = Configuracion::first();
         return view('admin.configuraciones.index',compact('configuracion'));
-        //
     }
 
     /**
@@ -23,7 +22,6 @@ class ConfiguracionController extends Controller
      */
     public function create()
     {
-
         //
     }
 
@@ -31,62 +29,61 @@ class ConfiguracionController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {
-        $request->validate([
-        'nombre'=> 'required|string|max:255',
-        'descripcion'=> 'required|string|max:255',
-        'direccion'=> 'required|string|max:255',
-        'telefono'=> 'required|string|max:255',
-        'email'=> 'required|email|max:255',
-        'web'=> 'required|url|max:255',
-        'logo'=> 'image|mimes:jpeg,png,jpg',
-        ]);
-        //buscar si existe un regsitro
-        $configuracion = Configuracion::first();
-        //si hay un archivo de log lo procesamos
-        if($request->hasFile('logo')) {
-            $logo =$request->file('logo');
-            $nombreArchivo =time() .'_'. $logo->getClientOriginalName();
-            $rutaDestino = public_path('uploads/logos');
-            $logo->move($rutaDestino, $nombreArchivo);
-            $logoPath = 'uploads/logos/'.$nombreArchivo;
-        }else {
-            //si no sube nuevo logo manetner el actual
-            $logoPath =$configuracion->logo ?? null;
-        }
+{
+    $request->validate([
+        'nombre' => 'required|string|max:255',  
+        'descripcion' => 'required|string|max:255',
+        'direccion' => 'required|string|max:255',
+        'telefono' => 'required|string|max:20',
+        'email' => 'required|email|max:255',
+        'web' => 'nullable|url|max:255',
+        'logo' => 'image|mimes:jpeg,png,jpg',
+    ]);
 
-        if($configuracion){
-            //si existe actualizar
-           $configuracion->update([
-            'nombre' =>$request->nombre,
-            'descripcion' =>$request->descripcion,
-            'direccion' =>$request->direccion,
-            'telefono'=> $request->telefono,
-            'email' => $request->email,
-            'web' =>$request->web,
-            'logo'=> $logoPath,
 
-            
-        ]);
+    $configuracion = Configuracion::first();
 
-        }else {
-            //si no existe xrear una nueva
-            Configuracion::create([
-            'nombre' =>$request->nombre,
-            'descripcion' =>$request->descripcion,
-            'direccion' =>$request->direccion,
-            'telefono'=> $request->telefono,
-            'email' => $request->email,
-            'web' =>$request->web,
-            'logo'=> $logoPath,
-
-            ]);
-        }
-        return redirect()->back()
-        ->with('mensaje','Configuracion guardadac correctamente')
-        ->with('icono','success');
+    
+    if ($request->hasFile('logo')) {
+        $logo = $request->file('logo');
+        $nombreArchivo = time() . '_' . $logo->getClientOriginalName();
+        $rutaDestino = public_path('uploads/logos');
+        $logo->move($rutaDestino, $nombreArchivo);
+        $logoPath = 'uploads/logos/' . $nombreArchivo;
+    } else {
         
+        $logoPath = $configuracion->logo ?? null;
     }
+
+    if ($configuracion) {
+       
+        $configuracion->update([
+            'nombre' => $request->nombre,
+            'descripcion'=> $request->descripcion,
+            'direccion'=> $request->direccion,
+            'telefono'=> $request->telefono,
+            'email'=> $request->email,
+            'web'=> $request->web, 
+            'logo'=> $logoPath,
+        ]);
+    } else {
+        
+        Configuracion::create([
+            'nombre' => $request->nombre,
+            'descripcion'=> $request->descripcion,
+            'direccion'=> $request->direccion,
+            'telefono'=> $request->telefono,
+            'email'=> $request->email,
+            'web'=> $request->web, 
+            'logo'=> $logoPath,
+        ]);
+    }
+
+    return redirect()->back()
+        ->with('mensaje', 'Configuración guardada correctamente')
+        ->with('icono', 'success');
+}
+
 
     /**
      * Display the specified resource.
