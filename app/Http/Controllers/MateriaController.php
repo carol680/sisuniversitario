@@ -73,8 +73,8 @@ class MateriaController extends Controller
             'codigo' => 'required|string|max:50',
         ]);
 
-        $materia = Materia::find($id); // Encuentra la carrera por ID
-        $materia->update($request->all()); // Actualiza los datos de la carrera
+        $materia = Materia::find($id); 
+        $materia->update($request->all()); 
 
         return redirect()->route('admin.materias.index')
             ->with('mensaje', 'Materia actualizada correctamente')
@@ -84,8 +84,8 @@ class MateriaController extends Controller
     
     public function destroy($id)/*  public function destroy($id) */
     {
-        $materia = Materia::find($id); // Encuentra l
-        $materia->delete(); // Elimina 
+        $materia = Materia::find($id); 
+        $materia->delete(); 
 
         return redirect()->route('admin.materias.index')
             ->with('mensaje', 'Materia eliminada correctamente')

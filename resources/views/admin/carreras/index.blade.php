@@ -82,7 +82,7 @@
     <style>
         /* Fondo transparente y sin borde en el contenedor */
         #example1_wrapper .dt-buttons {
-            background-color: transparent;
+            background-color:aquamarine
             box-shadow: none;
             border: none;
             display: flex;
@@ -93,7 +93,7 @@
 
         /* Estilo personalizado para los botones */
         #example1_wrapper .btn {
-            color: #fff; /* Color del texto en blanco */
+            color: #333; /* Color del texto en blanco */
             border-radius: 4px; /* Bordes redondeados */
             padding: 5px 15px; /* Espaciado interno */
             font-size: 14px; /* Tamaño de fuente */

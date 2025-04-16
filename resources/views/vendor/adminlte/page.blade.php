@@ -5,6 +5,25 @@
 
 @section('adminlte_css')
     @stack('css')
+    <style type="text/css">
+        .zoomP{
+            /*aumentamos la anchira y altura durante 2 segundos*/
+            transition: width 1.1s, height 1.1s, transform 1.1s;
+            -moz-transition: width 1.1s, heigth 1.1s, -moz-transform 1.1s;
+            -webkit-transition: width 1.1s, heigth 1.1s, -webkit-transform 1.1s;
+            -o-transition: width 1.1s; heigth 1.1s, -o-transform 1.1s;
+            border: 1px solid #c0c0c0;
+            box-shadow: #c0c0c0 0px 5px 5px 0px;
+        }
+        .zoomP:hover{
+            /*transformamos el elemento al pasar el mouse por encim al doble de su tamaño con 
+            scale(2). */
+            transform: scale(1.05);
+            -webkit-transform:scale(1.05);transform:scale(1.05)
+        }
+    </style>
+
+
     @yield('css')
 @stop
 

@@ -33,9 +33,9 @@
                         @php
                             $contador = 1;
                         @endphp
-                        @foreach($materias as $materia)<!-- de donde stoy sacando las variables -->
+                        @foreach($materias as $materia)<!-- de donde e sacado variables -->
                             <tr>
-                                <td style="text-align: center">{{$contador++}}</td>
+                                <td style="text-align: center">{{$contador++}}</td><!-- relacion materia y carrrera -->
                                 <td>{{$materia->carrera->nombre}}</td>
                                 <td>{{$materia->nombre}}</td>
                                 <td>{{$materia->codigo}}</td>
@@ -88,7 +88,7 @@
     <style>
         /* Fondo transparente y sin borde en el contenedor */
         #example1_wrapper .dt-buttons {
-            background-color: transparent;
+            background-color:aquamarine
             box-shadow: none;
             border: none;
             display: flex;
@@ -99,7 +99,7 @@
 
         /* Estilo personalizado para los botones */
         #example1_wrapper .btn {
-            color: #fff; /* Color del texto en blanco */
+            color: #333; /* Color del texto en blanco */
             border-radius: 4px; /* Bordes redondeados */
             padding: 5px 15px; /* Espaciado interno */
             font-size: 14px; /* Tamaño de fuente */

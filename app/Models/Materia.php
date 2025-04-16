@@ -17,7 +17,7 @@ class Materia extends Model
         'codigo',
     ];
 
-    //relacion de muchoa a muchos inversa
+    //relacion de uno a muchos inversa
     public function carrera()
     {
         return $this->belongsTo(Carrera::class);

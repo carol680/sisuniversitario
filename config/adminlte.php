@@ -340,16 +340,27 @@ return [
             'icon' => 'fas fa-fw fa-book',
             'classes' => 'bg-blue text-white',
         ],
-       
-        
-
+        ['header' => 'Datos'],
         [
-            'text' => 'profile',
-            'url' => 'admin/settings',
-            'icon' => 'fas fa-fw fa-user',
+            'text' => 'Roles',
+            'icon' => 'fas fa-fw fa-user-check',
+            'classes' => 'bg-blue text-white',
+            'submenu' =>[
+                [
+                    'text' => 'Listado de roles',
+                    'url' => 'admin/roles',
+                    'classes' => 'bg-white text-black',
+                ],
+            ],  
         ],
-        
-        ['header' => 'labels'],
+        [
+            'text' => 'Administrativos',
+            'url' => 'admin/administrativos',
+            'icon' => 'fas fa-fw fa-users-cog',
+            'classes' => 'bg-blue text-white',
+        ],
+       
+
        
     ],
 

@@ -80,26 +80,25 @@
 
 @section('css')
     <style>
-        /* Fondo transparente y sin borde en el contenedor */
+       
         #example1_wrapper .dt-buttons {
             background-color: transparent;
             box-shadow: none;
             border: none;
             display: flex;
-            justify-content: center; /* Centrar los botones */
-            gap: 10px; /* Espaciado entre botones */
-            margin-bottom: 15px; /* Separar botones de la tabla */
+            justify-content: center; 
+            gap: 10px;
+            margin-bottom: 15px; 
         }
 
-        /* Estilo personalizado para los botones */
         #example1_wrapper .btn {
-            color: #fff; /* Color del texto en blanco */
-            border-radius: 4px; /* Bordes redondeados */
-            padding: 5px 15px; /* Espaciado interno */
-            font-size: 14px; /* Tamaño de fuente */
+            color: #333; 
+            border-radius: 4px;
+            padding: 5px 15px; 
+            font-size: 14px; 
         }
 
-        /* Colores por tipo de botón */
+       
         .btn-danger { background-color: #dc3545; border: none; }
         .btn-success { background-color: #28a745; border: none; }
         .btn-info { background-color: #17a2b8; border: none; }

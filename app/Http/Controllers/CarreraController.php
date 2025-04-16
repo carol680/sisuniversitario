@@ -53,7 +53,7 @@ class CarreraController extends Controller
      */
     public function edit($id)
     {
-        $carrera = Carrera::findOrFail($id); // Encuentra la carrera por ID
+        $carrera = Carrera::findOrFail($id); 
         return view('admin.carreras.edit', compact('carrera'));
     }
 
@@ -66,8 +66,8 @@ class CarreraController extends Controller
             'nombre' => 'required|string|max:255',
         ]);
 
-        $carrera = Carrera::findOrFail($id); // Encuentra la carrera por ID
-        $carrera->update($request->all()); // Actualiza los datos de la carrera
+        $carrera = Carrera::findOrFail($id); 
+        $carrera->update($request->all()); 
 
         return redirect()->route('admin.carreras.index')
             ->with('mensaje', 'Carrera actualizada correctamente')
@@ -79,8 +79,8 @@ class CarreraController extends Controller
      */
     public function destroy($id)
     {
-        $carrera = Carrera::findOrFail($id); // Encuentra la carrera por ID
-        $carrera->delete(); // Elimina la carrera
+        $carrera = Carrera::findOrFail($id); 
+        $carrera->delete(); 
 
         return redirect()->route('admin.carreras.index')
             ->with('mensaje', 'Carrera eliminada correctamente')

@@ -1,19 +1,19 @@
 @extends('adminlte::page')
 
 @section('content_header')
-    <h1> <b>Listado de Gestiones Academicas</b> </h1>
+    <h1> <b>Listado del personal Administrativo</b> </h1>
     <br>
 @stop
 
 @section('content')
     <div class="row">
-        <div class="col-md-8">
+        <div class="col-md-12">
             <div class="card card-outline card-primary">
                 <div class="card-header">
-                    <h3 class="card-title">Gestiones registradas</h3>
+                    <h3 class="card-title">Administrativos registrados</h3>
 
                     <div class="card-tools">
-                        <a href="{{url('/admin/gestiones/create')}}" class="btn btn-primary"> Crear nuevo</a>
+                        <a href="{{url('/admin/administrativos/create')}}" class="btn btn-primary"> Crear nuevo</a>
                     </div>
                     <!-- /.card-tools -->
                 </div>
@@ -23,7 +23,15 @@
                         <thead>
                         <tr>
                             <th style="text-align: center">Nro</th>
-                            <th style="text-align: center">Nombre de la gestión</th>
+                            <th style="text-align: center">Rol</th>
+                            <th style="text-align: center">Nombre</th>
+                            <th style="text-align: center">Apellidos</th>
+                            <th style="text-align: center">Cédula</th>
+                            <th style="text-align: center">Teléfono</th>
+                            <th style="text-align: center">Correo</th>
+                            <th style="text-align: center">Dirección</th>
+                            <th style="text-align: center">Profesión</th>
+
                             <th style="text-align: center">Acción</th>
                         </tr>
                         </thead>
@@ -31,21 +39,29 @@
                         @php
                             $contador = 1;
                         @endphp
-                        @foreach($gestiones as $gestion)<!-- de donde stoy sacando las variables -->
+                        @foreach($administrativos as $administrativo)
                             <tr>
                                 <td style="text-align: center">{{$contador++}}</td>
-                                <td>{{$gestion->nombre}}</td><!-- paso aca los campos -->
+                                <td>{{ $administrativo->usuario->roles->pluck('name')->implode(', ') }}</td>
+                                <td>{{$administrativo->nombre}}</td>
+                                <td>{{$administrativo->apellidos}}</td>
+                                <td>{{$administrativo->ci}}</td>
+                                <td>{{$administrativo->telefono}}</td>
+                                <td>{{$administrativo->usuario->email}}</td>
+                                <td>{{$administrativo->direccion}}</td>
+                                <td>{{$administrativo->profesion}}</td>
                                 <td style="text-align: center">
                                     <div class="btn-group" role="group" aria-label="Basic example">
-                                        <a href="{{url('/admin/gestiones/'.$gestion->id.'/edit')}}" class="btn btn-success btn-sm"><i class="fas fa-pencil-alt"></i></a>
-                                        <form action="{{url('/admin/gestiones',$gestion->id)}}" method="post"
-                                              onclick="preguntar{{$gestion->id}}(event)" id="miFormulario{{$gestion->id}}">
+                                    <a href="{{url('/admin/administrativos/'.$administrativo->id)}}" class="btn btn-info btn-sm"><i class="fas fa-eye"></i></a>
+                                    <a href="{{url('/admin/administrativos/'.$administrativo->id.'/edit')}}" class="btn btn-success btn-sm"><i class="fas fa-pencil-alt"></i></a>
+                                        <form action="{{url('/admin/administrativos',$administrativo->id)}}" method="post"
+                                              onclick="preguntar{{$administrativo->id}}(event)" id="miFormulario{{$administrativo->id}}">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button>
-                                        </form>
-                                        <script>
-                                            function preguntar{{$gestion->id}}(event) {
+                                                <button type="submit" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button>
+                                                </form>
+                                                <script>         
+                                                 function preguntar{{$administrativo->id}}(event) {
                                                 event.preventDefault();
                                                 Swal.fire({
                                                     title: '¿Desea eliminar esta registro?',
@@ -58,7 +74,7 @@
                                                     denyButtonText: 'Cancelar',
                                                 }).then((result) => {
                                                     if (result.isConfirmed) {
-                                                        var form = $('#miFormulario{{$gestion->id}}');
+                                                        var form = $('#miFormulario{{$administrativo->id}}');
                                                         form.submit();
                                                     }
                                                 });
@@ -82,7 +98,7 @@
     <style>
         /* Fondo transparente y sin borde en el contenedor */
         #example1_wrapper .dt-buttons {
-            background-color:aquamarine
+            background-color:aquamarine;
             box-shadow: none;
             border: none;
             display: flex;
@@ -115,10 +131,10 @@
                 "pageLength": 5,
                 "language": {
                     "emptyTable": "No hay información",
-                    "info": "Mostrando _START_ a _END_ de _TOTAL_ Gestiones",
-                    "infoEmpty": "Mostrando 0 a 0 de 0 Gestiones",
-                    "infoFiltered": "(Filtrado de _MAX_ total Gestiones)",
-                    "lengthMenu": "Mostrar _MENU_ Gestiones",
+                    "info": "Mostrando _START_ a _END_ de _TOTAL_ Administrativos",
+                    "infoEmpty": "Mostrando 0 a 0 de 0 Administrativos",
+                    "infoFiltered": "(Filtrado de _MAX_ total Administrativos)",
+                    "lengthMenu": "Mostrar _MENU_ Administrativos",
                     "loadingRecords": "Cargando...",
                     "processing": "Procesando...",
                     "search": "Buscador:",
